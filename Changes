@@ -1,6 +1,8 @@
 Revision history for Perl extension dbMan
 
-0.38 <20140117>
+0.39 <20140117> latest development release
+
+0.38 <20140117> latest stable release
 	- interface Interface.pm - infobox() fallback support to print() and DBIx::dbMan::History link
 	- contact changed to IS4U
 	- extension HelpCommands - new contact to is4u.cz

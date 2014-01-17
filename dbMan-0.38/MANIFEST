@@ -47,7 +47,9 @@ lib/DBIx/dbMan/Extension/CmdSetDBMS.pm
 lib/DBIx/dbMan/Extension/CmdSetGUI.pm
 lib/DBIx/dbMan/Extension/CmdSetHorizScrollBar.pm
 lib/DBIx/dbMan/Extension/CmdSetLineNumbers.pm
+lib/DBIx/dbMan/Extension/CmdSetOracleSpecials.pm
 lib/DBIx/dbMan/Extension/CmdSetOutputFormat.pm
+lib/DBIx/dbMan/Extension/CmdSetSuggestionCache.pm
 lib/DBIx/dbMan/Extension/CmdSetTotalCount.pm
 lib/DBIx/dbMan/Extension/CmdSetTracing.pm
 lib/DBIx/dbMan/Extension/CmdShowErrors.pm
@@ -70,6 +72,7 @@ lib/DBIx/dbMan/Extension/EditOracle.pm
 lib/DBIx/dbMan/Extension/Eval.pm
 lib/DBIx/dbMan/Extension/Extensions.pm
 lib/DBIx/dbMan/Extension/Fallback.pm
+lib/DBIx/dbMan/Extension/FallbackNotify.pm
 lib/DBIx/dbMan/Extension/Format.pm
 lib/DBIx/dbMan/Extension/GUI.pm
 lib/DBIx/dbMan/Extension/GuiCreateConnection.pm
@@ -103,6 +106,8 @@ lib/DBIx/dbMan/Extension/SQLOutputTable.pm
 lib/DBIx/dbMan/Extension/SQLResultPreprocess.pm
 lib/DBIx/dbMan/Extension/SQLShowResult.pm
 lib/DBIx/dbMan/Extension/StandardSQL.pm
+lib/DBIx/dbMan/Extension/SuggestionCacheRetrieve.pm
+lib/DBIx/dbMan/Extension/SuggestionCacheStore.pm
 lib/DBIx/dbMan/Extension/TotalCount.pm
 lib/DBIx/dbMan/Extension/Transaction.pm
 lib/DBIx/dbMan/Extension/TrimCmd.pm
@@ -118,6 +123,8 @@ Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
 META.yml
+MYMETA.json
+MYMETA.yml
 patches/Term-ReadLine-Gnu-1.10.patch
 patches/Term-ReadLine-Gnu-1.13.patch
 README

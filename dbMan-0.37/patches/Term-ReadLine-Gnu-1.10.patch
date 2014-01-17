@@ -1,0 +1,12 @@
+diff -Naur orig/Gnu/XS.pm Term-ReadLine-Gnu-1.10/Gnu/XS.pm
+--- orig/Gnu/XS.pm	Fri Mar 29 18:54:44 2002
++++ Term-ReadLine-Gnu-1.10/Gnu/XS.pm	Fri Mar 29 18:55:08 2002
+@@ -461,7 +461,7 @@
+     }
+     
+     for (; $_i <= $#_matches; $_i++) {
+-	return $_matches[$_i] if ($_matches[$_i] =~ /^\Q$text/);
++	return $_matches[$_i] if ($_matches[$_i] =~ /^\Q$text/i);
+     }
+     return undef;
+ }

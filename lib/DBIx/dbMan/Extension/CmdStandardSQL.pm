@@ -21,7 +21,7 @@ sub handle_action {
 			$action{action} = 'SQL';
 			$action{type} = 'select';
 			$action{sql} = $action{cmd};
-			$action{explain} = 1 if $action{cmd} =~ /^explain\s+/i;
+			$action{explain} = 1 if $action{cmd} =~ /^explain\s+/i and $obj->{-dbi}->driver eq 'Oracle';
 		} elsif ($action{cmd} =~ /^(?:\/\*.*?\*\/\s*)?((delete|insert|update|create|drop|begin|alter|truncate|grant|revoke|analyze)\s+.*|vacuum)(?:\s*\/\*.*?\*\/)?$/i) {
 			$action{action} = 'SQL';
 			$action{type} = 'do';

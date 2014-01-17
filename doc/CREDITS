@@ -1,5 +1,5 @@
-dbMan           (c) 1999-2012 by Milan Sorm <sorm@is4u.cz>
------------------------------------------------------------------------------
+dbMan           (c) 1999-2014 by Milan Sorm <sorm@is4u.cz>
+----------------------------------------------------------
 
 Authors:
 
@@ -9,10 +9,11 @@ Milan Sorm <sorm@is4u.cz>
 	- documentation
 	- stable and development branch contributor
 
------------------------------------------------------------------------------
+----------------------------------------------------------
 
 Active testers and bugreporters (in alphabetical order):
 
-	Tomas Klein <klein@uikt.mendelu.cz>
-	Ondrej 'Kepi' Kudlik <kudlik@uikt.mendelu.cz>
-	Ales Kutin <kutin@uikt.mendelu.cz>
+	Tomas Cernik <cernik@is4u.cz>
+	Tomas Klein <klein@is4u.cz>
+	Ondrej 'Kepi' Kudlik <kepi@igloonet.cz>
+	Ales Kutin <kutin@is4u.cz>

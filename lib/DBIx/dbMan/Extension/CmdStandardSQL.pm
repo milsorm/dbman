@@ -3,11 +3,11 @@ package DBIx::dbMan::Extension::CmdStandardSQL;
 use strict;
 use base 'DBIx::dbMan::Extension';
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 1;
 
-sub IDENTIFICATION { return "000001-000013-000011"; }
+sub IDENTIFICATION { return "000001-000013-000012"; }
 
 sub preference { return 1000; }
 

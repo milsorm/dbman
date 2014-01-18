@@ -5,7 +5,7 @@ use locale;
 use vars qw/$AUTOLOAD/;
 use POSIX;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 1;
 
@@ -51,10 +51,22 @@ sub _load {
 			}
 			$value =~ s/^(['"])(.*)\1$/$2/;	# quoted line
 			push @{$obj->{config}->{$key}},$value;
-				
 		}
 		close F;
 	}
+}
+
+sub merge {
+	my($obj,$config) = @_;
+	return 0 unless $config;
+	foreach my $tag ($config->all_tags) {
+		if (ref $config->$tag eq "ARRAY") {
+			push @{$obj->{config}->{$tag}},@{$config->$tag};
+		}else {
+			push @{$obj->{config}->{$tag}},$config->$tag;
+		}
+	}
+	return 1;
 }
 
 sub _configfile {

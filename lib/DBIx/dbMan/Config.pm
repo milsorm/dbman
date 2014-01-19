@@ -57,13 +57,15 @@ sub _load {
 }
 
 sub merge {
-	my($obj,$config) = @_;
+	my ($obj,$config) = @_;
+
 	return 0 unless $config;
-	foreach my $tag ($config->all_tags) {
-		if (ref $config->$tag eq "ARRAY") {
-			push @{$obj->{config}->{$tag}},@{$config->$tag};
-		}else {
-			push @{$obj->{config}->{$tag}},$config->$tag;
+
+	for my $tag ($config->all_tags) {
+		if ( ref $config->$tag eq "ARRAY" ) {
+			push @{$obj->{config}->{$tag}}, @{$config->$tag};
+		} else {
+			push @{$obj->{config}->{$tag}}, $config->$tag;
 		}
 	}
 	return 1;

@@ -43,37 +43,36 @@ sub clear_all_connections {
 }
 
 sub load_group {
-	my ($obj,$name)=@_;
+	my ($obj,$name) = @_;
+
 	my $gdir = $obj->groupdir();
 	return -1 unless -d $gdir;
 	$gdir =~ s/\/$//;
 	return -2 unless -f "$gdir/$name";
-	CORE::open F,"$gdir/$name" or return -2;
-	CORE::close F;
-	my $group = new DBIx::dbMan::Config -file => "$gdir/$name";
-	return $group;
+
+	return new DBIx::dbMan::Config -file => "$gdir/$name";
 }
 
 sub load_groups {
 	my $obj = shift;
+
 	my $sdir = $obj->groupdir;
-	my %groups;
-	if(-d $sdir)
-	{
+	my %groups = ();
+
+	if (-d $sdir) {
 		opendir S,$sdir;
-		for my $group (grep !/^\.\.?/,readdir S)
-		{
-			$groups{$group}=$obj->load_group($group);
+		for my $group ( grep !/^\.\.?/, readdir S ) {
+			$groups{$group} = $obj->load_group($group);
 		}
 		closedir S;
 	}
 
-	$obj->{_groups}=\%groups;
+	$obj->{_groups} = \%groups;
 }
 
-sub get_group
-{
-	my($obj,$group)=@_;
+sub get_group {
+	my ($obj,$group) = @_;
+
 	return $obj->{_groups}->{$group};
 }
 
@@ -95,23 +94,23 @@ sub load_connections {
 
 sub load_connection {
 	my ($obj,$name) = @_;
+
 	my $cdir = $obj->connectiondir;
 	return -1 unless -d $cdir;
 	$cdir =~ s/\/$//;
 	return -2 unless -f "$cdir/$name";
-	CORE::open F,"$cdir/$name" or return -2;
-	CORE::close F;
+
 	my $lcfg = new DBIx::dbMan::Config -file => "$cdir/$name";
-	if ($lcfg->group)
-	{
-		foreach my $g ($lcfg->group())
-		{
-			print "Error: Can't use group '$g' for connection '$name'\n" unless $lcfg->merge($obj->get_group($g));
+	if ($lcfg->group) {
+		for ( $lcfg->group() ) {
+			print STDERR "Error: Can't use group '$_' for connection '$name'\n" unless $lcfg->merge( $obj->get_group($_) );
 		}
 	}
+
 	my %connection;
 	$connection{$_} = $lcfg->$_ for $lcfg->all_tags;
 	$obj->{connections}->{$name} = \%connection;
+	
 	$obj->{-interface}->add_to_actionlist({ action => 'CONNECTION',
 		operation => 'open', what => $name }) if lc $lcfg->auto_login eq 'yes';
 }

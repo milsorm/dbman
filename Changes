@@ -1,5 +1,7 @@
 Revision history for Perl extension dbMan
 
+0.40 <20140119>
+
 0.39 <20140119>
 	- fix for mysql explain [Shinn pull]
 	- db connection group support

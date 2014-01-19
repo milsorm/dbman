@@ -1,10 +1,10 @@
 Revision history for Perl extension dbMan
 
-0.39 <20140119> latest development release
+0.39 <20140119>
 	- fix for mysql explain [Shinn pull]
 	- db connection group support
 
-0.38 <20140117> latest stable release
+0.38 <20140117>
 	- interface Interface.pm - infobox() fallback support to print() and DBIx::dbMan::History link
 	- contact changed to IS4U
 	- extension HelpCommands - new contact to is4u.cz

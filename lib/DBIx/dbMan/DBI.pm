@@ -8,7 +8,7 @@ use DBIx::dbMan::Config;
 use DBIx::dbMan::MemPool;
 use DBI;
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 1;
 
@@ -16,6 +16,7 @@ sub new {
 	my $class = shift;
 	my $obj = bless { @_ }, $class;
 	$obj->clear_all_connections;
+	$obj->load_groups();
 	$obj->load_connections;
 	return $obj;
 }
@@ -29,13 +30,56 @@ sub connectiondir {
 	return $ENV{HOME}.'/.dbman/connections';
 }
 
+sub groupdir {
+	my $obj = shift;
+	return $ENV{DBMAN_GROUPDIR} if $ENV{DBMAN_GROUPDIR};
+	mkdir $ENV{HOME}.'/.dbman/groups' unless -d $ENV{HOME}.'/.dbman/groups';
+	return $ENV{HOME}.'/.dbman/groups';
+}
+
 sub clear_all_connections {
 	my $obj = shift;
 	$obj->{connections} = {};
 }
 
+sub load_group {
+	my ($obj,$name)=@_;
+	my $gdir = $obj->groupdir();
+	return -1 unless -d $gdir;
+	$gdir =~ s/\/$//;
+	return -2 unless -f "$gdir/$name";
+	CORE::open F,"$gdir/$name" or return -2;
+	CORE::close F;
+	my $group = new DBIx::dbMan::Config -file => "$gdir/$name";
+	return $group;
+}
+
+sub load_groups {
+	my $obj = shift;
+	my $sdir = $obj->groupdir;
+	my %groups;
+	if(-d $sdir)
+	{
+		opendir S,$sdir;
+		for my $group (grep !/^\.\.?/,readdir S)
+		{
+			$groups{$group}=$obj->load_group($group);
+		}
+		closedir S;
+	}
+
+	$obj->{_groups}=\%groups;
+}
+
+sub get_group
+{
+	my($obj,$group)=@_;
+	return $obj->{_groups}->{$group};
+}
+
 sub load_connections {
 	my $obj = shift;
+
 	my $cdir = $obj->connectiondir;
 	return -1 unless -d $cdir;
 
@@ -58,6 +102,13 @@ sub load_connection {
 	CORE::open F,"$cdir/$name" or return -2;
 	CORE::close F;
 	my $lcfg = new DBIx::dbMan::Config -file => "$cdir/$name";
+	if ($lcfg->group)
+	{
+		foreach my $g ($lcfg->group())
+		{
+			print "Error: Can't use group '$g' for connection '$name'\n" unless $lcfg->merge($obj->get_group($g));
+		}
+	}
 	my %connection;
 	$connection{$_} = $lcfg->$_ for $lcfg->all_tags;
 	$obj->{connections}->{$name} = \%connection;

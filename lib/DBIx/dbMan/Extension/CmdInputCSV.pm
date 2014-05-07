@@ -3,11 +3,11 @@ package DBIx::dbMan::Extension::CmdInputCSV;
 use strict;
 use base 'DBIx::dbMan::Extension';
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 1;
 
-sub IDENTIFICATION { return "000001-000040-000004"; }
+sub IDENTIFICATION { return "000001-000040-000005"; }
 
 sub preference { return 1500; }
 
@@ -25,6 +25,9 @@ sub handle_action {
 			$action{opt_quote} = '"';
 			$action{opt_eol} = "\n";
 			$action{opt_headings} = 0;
+			$action{opt_escape} = '"';
+			$action{opt_allow_loose_escapes} = 1;
+			$action{opt_allow_loose_quotes} = 1;
 			my $opt = $1;
 			my @opts = split /\s+/,$opt;
 			for (@opts) {
@@ -33,7 +36,7 @@ sub handle_action {
 				
 				$value =~ s/\\(.)/my $v=''; my $src='$v="\\'.$1.'";'; eval $src; $v/eg;
 
-				if ($tag =~ /^(separator|quote|eol|headings)$/) {
+				if ($tag =~ /^(separator|quote|eol|headings|escape|allow_loose_escapes|allow_loose_quotes)$/) {
 					$action{"opt_$tag"} = $value;
 				} else {
 					$action{action} = 'NONE';
@@ -49,7 +52,7 @@ sub handle_action {
 
 sub cmdhelp {
 	return [
-		'\csvin[<options>](<file>) <command>' => 'Import CSV file <file> through placeholders in <command> (with optionable <options> defined like separator=, quote=" eol=\n headings=0 where headings=0 is no headings, =1 is headings skip, \s means space, \t means tabulator)'
+		'\csvin[<options>](<file>) <command>' => 'Import CSV file <file> through placeholders in <command> (with optionable <options> defined like separator=, quote=" eol=\n headings=0 escape=" where headings=0 is no headings, =1 is headings skip, \s means space, \t means tabulator)'
 	];
 }
 

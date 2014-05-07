@@ -5,11 +5,11 @@ use base 'DBIx::dbMan::Extension';
 use Text::CSV_XS;
 use FileHandle;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 1;
 
-sub IDENTIFICATION { return "000001-000041-000004"; }
+sub IDENTIFICATION { return "000001-000041-000005"; }
 
 sub preference { return 0; }
 
@@ -22,7 +22,10 @@ sub handle_action {
 		$action{action} = 'NONE';
 		my $csv = new Text::CSV_XS { quote_char => $action{opt_quote},
 			eol => $action{opt_eol}, binary => 1,
-			sep_char => $action{opt_separator} };
+			sep_char => $action{opt_separator},
+			escape_char => $action{opt_escape},
+			allow_loose_escapes => $action{opt_allow_loose_escapes},
+			allow_loose_quotes => $action{opt_allow_loose_quotes} };
 
 		my $file = new FileHandle "<$action{file}";
 		unless (defined $file) {

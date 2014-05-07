@@ -5,6 +5,8 @@ Revision history for Perl extension dbMan
 	- DBI support for config variables
 	- extension Connections - support for config in show connections
 	- patches for Term::Readline are obsolete, use .inputrc hints (in README)
+	- extension CmdInputCSV - allow for escape, allow_loose_escapes and allow_loose_quotes
+	- extension InputCSV - support for new options from CmdInputCSV
 
 0.39 <20140119>
 	- fix for mysql explain [Shinn pull]

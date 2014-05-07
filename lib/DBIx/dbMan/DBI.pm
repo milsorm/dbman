@@ -8,7 +8,7 @@ use DBIx::dbMan::Config;
 use DBIx::dbMan::MemPool;
 use DBI;
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 1;
 
@@ -122,11 +122,20 @@ sub open {
 	return -4 if $obj->{connections}->{$name}->{-logged};
 	return -1 unless grep { $_ eq $obj->{connections}->{$name}->{driver} } $obj->driverlist;
 
+	my %vars = qw/PrintError 0 RaiseError 0 AutoCommit 1 LongTruncOk 1/;
+	if ( $obj->{connections}->{$name}->{config} ) {
+		for ( split /;\s*/, $obj->{connections}->{$name}->{config} ) {
+			if ( /^\s*(\S+?)\s*=\s*(\S+)\s*$/ ) {
+				$vars{ $1 } = $2 unless $1 eq 'AutoCommit';		# everything unless transactions
+			}
+		}
+	}
+
 	my $dbi = DBI->connect('dbi:'.$obj->{connections}->{$name}->{driver}.
 		':'.$obj->{connections}->{$name}->{dsn},
 		$obj->{connections}->{$name}->{login},
 		$obj->{connections}->{$name}->{password},
-		{ PrintError => 0, RaiseError => 0, AutoCommit => 1, LongTruncOk => 1 });
+		\%vars );
 
 	return -2 unless defined $dbi;
 
@@ -255,7 +264,7 @@ sub save_connection {
 	return -1 unless -d $cdir;
 	$cdir =~ s/\/$//;
 	CORE::open F,">$cdir/$name" or return -2;
-	for (qw/driver dsn login password auto_login/) {
+	for (qw/driver dsn login password auto_login config/) {
 		print F "$_ ".$obj->{connections}->{$name}->{$_}."\n"
 			if exists $obj->{connections}->{$name}->{$_}
 				and $obj->{connections}->{$name}->{$_} ne '';

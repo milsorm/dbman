@@ -5,11 +5,11 @@ use base 'DBIx::dbMan::Extension';
 use Text::FormatTable;
 use DBI;
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 1;
 
-sub IDENTIFICATION { return "000001-000005-000009"; }
+sub IDENTIFICATION { return "000001-000005-000010"; }
 
 sub preference { return 0; }
 
@@ -169,12 +169,12 @@ sub handle_action {
 			my $clist = '';
 			if (@list) {
 				$clist .= ($action{what} eq 'active'?'Active c':'C')."onnections:\n";
-				my $table = new Text::FormatTable '| l l | l | l | l | l | l |';
+				my $table = new Text::FormatTable '| l l | l | l | l | l | l | l |';
 				$table->rule;
-				$table->head('C','NAME','ACTIVE','PERMANENT','DRIVER','LOGIN','DSN');
+				$table->head('C','NAME','ACTIVE','PERMANENT','DRIVER','LOGIN','DSN','CONFIG');
 				$table->rule;
 				for (@list) {
-					$table->row((($obj->{-dbi}->current eq $_->{name})?'*':' '),$_->{name},($_->{-logged}?'yes':'no'),($obj->{-dbi}->is_permanent_connection($_->{name})?'yes':'no'),$_->{driver},$_->{login},$_->{dsn});
+					$table->row((($obj->{-dbi}->current eq $_->{name})?'*':' '),$_->{name},($_->{-logged}?'yes':'no'),($obj->{-dbi}->is_permanent_connection($_->{name})?'yes':'no'),$_->{driver},$_->{login},$_->{dsn},$_->{config} || '');
 				}
 				$table->rule;
 				$clist .= $table->render($obj->{-interface}->render_size);
@@ -186,7 +186,7 @@ sub handle_action {
 			$action{output} = $clist;
 		} elsif ($action{operation} eq 'create') {
 			my %parm = ();
-			for (qw/driver dsn login password auto_login/) { $parm{$_} = $action{$_}; }
+			for (qw/driver dsn login password auto_login config/) { $parm{$_} = $action{$_} || ''; }
 
 			$action{action} = 'NONE';
 			my $error = $obj->{-dbi}->create_connection($action{what},\%parm);

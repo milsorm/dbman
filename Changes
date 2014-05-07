@@ -1,6 +1,9 @@
 Revision history for Perl extension dbMan
 
-0.40 <20140119>
+0.40 <20140507>
+	- extension CmdConnections - support for config option
+	- DBI support for config variables
+	- extension Connections - support for config in show connections
 
 0.39 <20140119>
 	- fix for mysql explain [Shinn pull]

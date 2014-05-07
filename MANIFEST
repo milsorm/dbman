@@ -125,8 +125,6 @@ MANIFEST.SKIP
 META.yml
 MYMETA.json
 MYMETA.yml
-patches/Term-ReadLine-Gnu-1.10.patch
-patches/Term-ReadLine-Gnu-1.13.patch
 README
 t/01core.t
 t/02dbi.t

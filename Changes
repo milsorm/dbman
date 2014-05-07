@@ -4,6 +4,7 @@ Revision history for Perl extension dbMan
 	- extension CmdConnections - support for config option
 	- DBI support for config variables
 	- extension Connections - support for config in show connections
+	- patches for Term::Readline are obsolete, use .inputrc hints (in README)
 
 0.39 <20140119>
 	- fix for mysql explain [Shinn pull]

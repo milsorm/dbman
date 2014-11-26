@@ -4,6 +4,9 @@ Revision history for Perl extension dbMan
 	- DBI support for config with [...] and {...} syntax variable
 	- extension CmdSetOracleSpecials - support for LongReadLen (thanks to Tom Cernik)
 	- extension MacroWorks - macro_file or /.dbman/macros can be a folder with individual files containing macros
+	- DBI support prompt_color
+	- extension Connections - support for prompt_color in connection configuration file (thanks to Tom Dohnalek) - it cannot be directly configured yet :(
+	- Term::ANSIColor dependency
 
 0.40 <20140507>
 	- extension CmdConnections - support for config option

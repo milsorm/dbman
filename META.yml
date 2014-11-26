@@ -17,6 +17,7 @@ requires:
     Term::ReadLine::Gnu:           0
     Term::Screen:                  0
     Term::Size:                    0
+    Term::ANSIColor:               0
     Text::CSV_XS:                  0
     Text::FormatTable:             0
 

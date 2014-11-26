@@ -4,12 +4,13 @@ use strict;
 use base 'DBIx::dbMan::Extension';
 use Text::FormatTable;
 use DBI;
+use Term::ANSIColor;
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 1;
 
-sub IDENTIFICATION { return "000001-000005-000010"; }
+sub IDENTIFICATION { return "000001-000005-000011"; }
 
 sub preference { return 0; }
 
@@ -232,7 +233,11 @@ sub handle_action {
 		}
 
 		my $db = '';
-		$db = '<'.$obj->{-dbi}->current.'>' if $obj->{-dbi}->current;
+		if ( $obj->{-dbi}->current ) {
+			$db .= color( $obj->{-dbi}->prompt_color ) if $obj->{-dbi}->prompt_color;
+			$db .= '<'.$obj->{-dbi}->current.'>';
+			$db .= color( 'reset' ) if $obj->{-dbi}->prompt_color;
+		}
 		$obj->{-interface}->prompt($obj->{prompt_num},$db);
 	}
 

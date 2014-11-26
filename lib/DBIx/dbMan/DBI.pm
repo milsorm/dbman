@@ -8,7 +8,7 @@ use DBIx::dbMan::Config;
 use DBIx::dbMan::MemPool;
 use DBI;
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 1;
 
@@ -334,6 +334,12 @@ sub login {
 	my $obj = shift;
 	return undef unless $obj->{current};
 	return $obj->{connections}->{$obj->{current}}->{login};
+}
+
+sub prompt_color {
+	my $obj = shift;
+	return undef unless $obj->{current};
+	return $obj->{connections}->{$obj->{current}}->{prompt_color};
 }
 
 sub AUTOLOAD {

@@ -1,7 +1,8 @@
 Revision history for Perl extension dbMan
 
-0.41 <20140507>
+0.41 <20141126>
 	- DBI support for config with [...] and {...} syntax variable
+	- extension CmdSetOracleSpecials support for LongReadLen (thanks to Tom Cernik)
 
 0.40 <20140507>
 	- extension CmdConnections - support for config option

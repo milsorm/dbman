@@ -47,7 +47,7 @@ sub handle_action {
 sub cmdhelp {
 	return [
 		'SET ORACLE XPLAN [ON|OFF]' => 'Set Oracle DBMS_XPLAN module on or off (for db version 10 or newer).',
-		'SET ORACLE LONGREADLEN TO [number]' => 'Set Oracle LongReadLen connection parameter to selected value.'
+		'SET ORACLE LONGREADLEN TO <number>' => 'Set Oracle LongReadLen connection parameter to selected value.'
 	];
 }
 

@@ -187,7 +187,7 @@ sub handle_action {
 			$action{output} = $clist;
 		} elsif ($action{operation} eq 'create') {
 			my %parm = ();
-			for (qw/driver dsn login password auto_login config/) { $parm{$_} = $action{$_} || ''; }
+			for (qw/driver dsn login password auto_login config prompt_color/) { $parm{$_} = $action{$_} || ''; }
 
 			$action{action} = 'NONE';
 			my $error = $obj->{-dbi}->create_connection($action{what},\%parm);

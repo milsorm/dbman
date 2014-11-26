@@ -42,22 +42,22 @@ sub load_macros {
 
 	my @macros = ();
 
-	my @files;
+	my @files = ();
 
-	if( -d $obj->macrofile ) {
-		if(opendir (D, $obj->macrofile)) {
-			while (my $file = readdir(D)) {
-				next if ($file =~ /^\./);
-				push @files, File::Spec->catfile( $obj->macrofile,$file );
+	if ( -d $obj->macrofile ) {
+		if (opendir D, $obj->macrofile) {
+			while (readdir D) {
+				next if /^\./;
+				push @files, File::Spec->catfile( $obj->macrofile, $_ );
 			}
-			closedir(D);
+			closedir D;
 		}
 	} else {
 		push @files, $obj->macrofile;
 	}
 
 	for my $file (@files) {
-		if (open F,$file) {
+		if (open F, $file) {
 			while (<F>) {
 				chomp;
 				push @macros,$_ if m#^s/(.+)/(.*)/[gei]?#;

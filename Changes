@@ -2,7 +2,8 @@ Revision history for Perl extension dbMan
 
 0.41 <20141126>
 	- DBI support for config with [...] and {...} syntax variable
-	- extension CmdSetOracleSpecials support for LongReadLen (thanks to Tom Cernik)
+	- extension CmdSetOracleSpecials - support for LongReadLen (thanks to Tom Cernik)
+	- extension MacroWorks - macro_file or /.dbman/macros can be a folder with individual files containing macros
 
 0.40 <20140507>
 	- extension CmdConnections - support for config option

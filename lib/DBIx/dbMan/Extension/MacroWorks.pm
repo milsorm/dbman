@@ -5,7 +5,7 @@ use base 'DBIx::dbMan::Extension';
 use Text::FormatTable;
 use File::Spec;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 1;
 
@@ -46,9 +46,9 @@ sub load_macros {
 
 	if ( -d $obj->macrofile ) {
 		if (opendir D, $obj->macrofile) {
-			while (readdir D) {
-				next if /^\./;
-				push @files, File::Spec->catfile( $obj->macrofile, $_ );
+			while (my $file = readdir D) {
+				next if $file =~ /^\./;
+				push @files, File::Spec->catfile( $obj->macrofile, $file );
 			}
 			closedir D;
 		}

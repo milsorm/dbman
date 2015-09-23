@@ -31,7 +31,7 @@ sub handle_action {
 			}
 
 			$obj->{-interface}->rebuild_menu();
-		} elsif ($action{cmd} =~ /^set\s+oracle\s+longreadlen\s+to\s+(\d+)\s+$/i) {
+		} elsif ($action{cmd} =~ /^set\s+oracle\s+longreadlen\s+to\s+(\d+)\s*$/i) {
 			my $lrl_to = $1;
 			$action{action} = 'OUTPUT';
 			my $lrl_from = $obj->{-dbi}->longreadlen();
@@ -64,7 +64,7 @@ sub cmdcomplete {
 		push @ret, qw/XPLAN/ if $line =~ /^\s*SET\s+ORACLE\s+\S*$/i;
 	}
 	push @ret, qw/LONGREADLEN/ if $line =~ /^\s*SET\s+ORACLE\s+\S*$/i;
-	push @ret, qw/TO/ if $line =~ /^\s*SET\s+ORACLE\s+LONGREADLEN\S*$/i;
+	push @ret, qw/TO/ if $line =~ /^\s*SET\s+ORACLE\s+LONGREADLEN\s+\S*$/i;
 
 	return @ret;
 }

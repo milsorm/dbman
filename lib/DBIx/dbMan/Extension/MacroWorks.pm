@@ -47,7 +47,7 @@ sub load_macros {
 	if ( -d $obj->macrofile ) {
 		if (opendir D, $obj->macrofile) {
 			while (my $file = readdir D) {
-				next if $file =~ /^\./;
+				next if $file=~ /^\./;
 				push @files, File::Spec->catfile( $obj->macrofile, $file );
 			}
 			closedir D;

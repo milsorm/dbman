@@ -3,21 +3,24 @@ package DBIx::dbMan::DBI;
 use strict;
 use locale;
 use vars qw/$AUTOLOAD/;
+
 use POSIX;
 use DBIx::dbMan::Config;
 use DBIx::dbMan::MemPool;
 use DBI;
 
-our $VERSION = '0.13';
+our $VERSION = '0.14';
 
 1;
 
 sub new {
 	my $class = shift;
 	my $obj = bless { @_ }, $class;
+
 	$obj->clear_all_connections;
 	$obj->load_groups();
 	$obj->load_connections;
+
 	return $obj;
 }
 
@@ -25,15 +28,21 @@ sub connectiondir {
 	my $obj = shift;
 
 	return $ENV{DBMAN_CONNECTIONDIR} if $ENV{DBMAN_CONNECTIONDIR};
+
 	return $obj->{-config}->connection_dir if $obj->{-config}->connection_dir;
+
 	mkdir $ENV{HOME}.'/.dbman/connections' unless -d $ENV{HOME}.'/.dbman/connections';
+
 	return $ENV{HOME}.'/.dbman/connections';
 }
 
 sub groupdir {
 	my $obj = shift;
+
 	return $ENV{DBMAN_GROUPDIR} if $ENV{DBMAN_GROUPDIR};
+
 	mkdir $ENV{HOME}.'/.dbman/groups' unless -d $ENV{HOME}.'/.dbman/groups';
+
 	return $ENV{HOME}.'/.dbman/groups';
 }
 
@@ -101,7 +110,9 @@ sub load_connection {
 	return -2 unless -f "$cdir/$name";
 
 	my $lcfg = new DBIx::dbMan::Config -file => "$cdir/$name";
-	if ($lcfg->group) {
+use Data::Dumper;
+print Dumper $lcfg;
+	while ($lcfg->group) {
 		for ( $lcfg->group() ) {
 			print STDERR "Error: Can't use group '$_' for connection '$name'\n" unless $lcfg->merge( $obj->get_group($_) );
 		}

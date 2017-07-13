@@ -1,5 +1,8 @@
 Revision history for Perl extension dbMan
 
+0.42 <20170714>
+    - group can be used recursively
+
 0.41 <20170713>
 	- DBI support for config with [...] and {...} syntax variable
 	- extension CmdSetOracleSpecials - support for LongReadLen (thanks to Tom Cernik)

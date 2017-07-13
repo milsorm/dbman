@@ -1,8 +1,9 @@
 package DBIx::dbMan;
 
 =comment
+
 	dbMan 0.41
-	(c) Copyright 1999-2014 by Milan Sorm, sorm@is4u.cz
+	(c) Copyright 1999-2017 by Milan Sorm, sorm@is4u.cz
 	All rights reserved.
 
 	This software provides some functionality in database managing
@@ -10,6 +11,7 @@ package DBIx::dbMan;
 
 	This program is free software; you can redistribute it and/or modify it
 	under the same terms as Perl itself.
+
 =cut
 
 use strict;

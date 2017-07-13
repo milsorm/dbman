@@ -9,7 +9,7 @@ use DBIx::dbMan::Config;
 use DBIx::dbMan::MemPool;
 use DBI;
 
-our $VERSION = '0.14';
+our $VERSION = '0.15';
 
 1;
 
@@ -146,6 +146,12 @@ sub open {
     return -1 unless grep { $_ eq $obj->{ connections }->{ $name }->{ driver } } $obj->driverlist;
 
     my %vars = qw/PrintError 0 RaiseError 0 AutoCommit 1 LongTruncOk 1/;
+
+    # in case Oracle we need from 11R2 provide information about supported signals
+    if ( $obj->{ connections }->{ $name }->{ driver } eq 'Oracle' ) {
+        $vars{ ora_connect_with_default_signals } = [ 'INT' ];
+    }
+
     if ( $obj->{ connections }->{ $name }->{ config } ) {
         for ( split /;\s*/, $obj->{ connections }->{ $name }->{ config } ) {
             if ( /^\s*(\S+?)\s*=\s*(\S+)\s*$/ ) {
@@ -375,7 +381,9 @@ sub AUTOLOAD {
     return undef unless exists $obj->{ connections }->{ $obj->{ current } };
     return undef unless $obj->{ connections }->{ $obj->{ current } }->{ -logged };
     return undef unless defined $obj->{ connections }->{ $obj->{ current } }->{ -dbi };
+
     my $dbi = $obj->{ connections }->{ $obj->{ current } }->{ -dbi };
+
     return $dbi->$AUTOLOAD( @_ );
 }
 

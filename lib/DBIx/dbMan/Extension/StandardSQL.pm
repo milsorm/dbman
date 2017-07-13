@@ -65,6 +65,7 @@ sub handle_action {
 				$action{action} = 'OUTPUT';
 				$action{output} = $obj->{-dbi}->errstr()."\n";
 				$action{processed} = 1;
+
 				$obj->{-dbi}->longreadlen($lr) if $action{longreadlen};
 				$obj->{-interface}->nostatus unless $action{output_quiet};
 				return %action;
@@ -73,7 +74,15 @@ sub handle_action {
 			my $res = eval {
 				return $sth->execute();
 			};
-			$res = undef if $@;
+            if ( $@ ) {
+				$action{action} = 'OUTPUT';
+                $action{ output } = ( $@ =~ /^Catched signal INT/ ) ? "Interrupted by user.\n" : $@;
+				$action{processed} = 1;
+
+				$obj->{-dbi}->longreadlen($lr) if $action{longreadlen};
+				$obj->{-interface}->nostatus unless $action{output_quiet};
+				return %action;
+            }
 
 			$obj->{-dbi}->longreadlen($lr) if $action{longreadlen};
 			if (not defined $res) {
@@ -89,9 +98,23 @@ sub handle_action {
 					if ($@) {
 						$action{fieldtypes} = [ map { -9998 } @{$action{fieldnames}} ];
 					}
-                    $res = [];
-                    while ( my $row = $sth->fetchrow_arrayref() ) {
-                        push @$res, [ @$row ];
+                    $res = eval {
+                        my $result = [];
+                        while ( my $row = $sth->fetchrow_arrayref() ) {
+                            push @$result, [ @$row ];
+                        }
+                        return $result;
+                    };
+                    if ( $@ ) {
+                        $sth->finish;
+
+                        $action{action} = 'OUTPUT';
+                        $action{ output } = ( $@ =~ /^Catched signal INT/ ) ? "Interrupted by user.\n" : $@;
+                        $action{processed} = 1;
+
+                        $obj->{-dbi}->longreadlen($lr) if $action{longreadlen};
+                        $obj->{-interface}->nostatus unless $action{output_quiet};
+                        return %action;
                     }
 				}
 				if ($action{explain}) {

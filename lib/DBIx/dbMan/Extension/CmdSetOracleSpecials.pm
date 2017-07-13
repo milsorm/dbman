@@ -31,12 +31,12 @@ sub handle_action {
 			}
 
 			$obj->{-interface}->rebuild_menu();
-		}elsif($action{cmd}=~ /^set\s+oracle\s+longreadlen\s+to\s+(\d+)\s+$/i) {
-			my $lrl_to=$1;
+		} elsif ($action{cmd} =~ /^set\s+oracle\s+longreadlen\s+to\s+(\d+)\s+$/i) {
+			my $lrl_to = $1;
 			$action{action} = 'OUTPUT';
-			my $lrl_from=$obj->{-dbi}->longreadlen();
+			my $lrl_from = $obj->{-dbi}->longreadlen();
 			$obj->{-dbi}->longreadlen($lrl_to);
-			$action{output}="Oracle LongReadLen set from $lrl_from to $lrl_to\n";
+			$action{output} = "Oracle LongReadLen changed from $lrl_from to $lrl_to.\n";
 		}
 	}
 
@@ -47,7 +47,7 @@ sub handle_action {
 sub cmdhelp {
 	return [
 		'SET ORACLE XPLAN [ON|OFF]' => 'Set Oracle DBMS_XPLAN module on or off (for db version 10 or newer).',
-		'SET ORACLE LONGREADLEN TO number' => 'Set Oracle longreadlen to selected length'
+		'SET ORACLE LONGREADLEN TO <number>' => 'Set Oracle LongReadLen connection parameter to selected value.'
 	];
 }
 
@@ -57,15 +57,14 @@ sub cmdcomplete {
 	my $local_mempool = $obj->{-dbi}->mempool();
 	return qw/ORACLE/ if $line =~ /^\s*SET\s+\S*$/i;
 	return qw/SET/ if $line =~ /^\s*[A-Z]*$/i;
-	my @ret;
+
+	my @ret = ();
 	if ( $local_mempool ) {
-		push @ret,qw/ON OFF/ if $line =~ /^\s*SET\s+ORACLE\s+XPLAN\s+\S*$/i;
-		push @ret,qw/XPLAN/ if $line =~ /^\s*SET\s+ORACLE\s+\S*$/i;
+		push @ret, qw/ON OFF/ if $line =~ /^\s*SET\s+ORACLE\s+XPLAN\s+\S*$/i;
+		push @ret, qw/XPLAN/ if $line =~ /^\s*SET\s+ORACLE\s+\S*$/i;
 	}
 	push @ret, qw/LONGREADLEN/ if $line =~ /^\s*SET\s+ORACLE\s+\S*$/i;
 	push @ret, qw/TO/ if $line =~ /^\s*SET\s+ORACLE\s+LONGREADLEN\S*$/i;
 
-	return @ret if(@ret);
-
-	return ();
+	return @ret;
 }

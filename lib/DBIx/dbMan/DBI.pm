@@ -8,7 +8,7 @@ use DBIx::dbMan::Config;
 use DBIx::dbMan::MemPool;
 use DBI;
 
-our $VERSION = '0.11';
+our $VERSION = '0.13';
 
 1;
 
@@ -126,7 +126,10 @@ sub open {
 	if ( $obj->{connections}->{$name}->{config} ) {
 		for ( split /;\s*/, $obj->{connections}->{$name}->{config} ) {
 			if ( /^\s*(\S+?)\s*=\s*(\S+)\s*$/ ) {
-				$vars{ $1 } = $2 unless $1 eq 'AutoCommit';		# everything unless transactions
+				my ( $var, $val ) = ( $1, $2 );
+				next if $var eq 'AutoCommit';		# everything unless transactions
+				$val = eval $val if $val =~ /^\[(.*)\]$/ || $val =~ /^\{(.*)\}$/;
+				$vars{ $var } = $val;
 			}
 		}
 	}
@@ -331,6 +334,12 @@ sub login {
 	my $obj = shift;
 	return undef unless $obj->{current};
 	return $obj->{connections}->{$obj->{current}}->{login};
+}
+
+sub prompt_color {
+	my $obj = shift;
+	return undef unless $obj->{current};
+	return $obj->{connections}->{$obj->{current}}->{prompt_color};
 }
 
 sub AUTOLOAD {

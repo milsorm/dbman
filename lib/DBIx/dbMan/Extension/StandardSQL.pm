@@ -89,7 +89,10 @@ sub handle_action {
 					if ($@) {
 						$action{fieldtypes} = [ map { -9998 } @{$action{fieldnames}} ];
 					}
-					$res = $sth->fetchall_arrayref();
+                    $res = [];
+                    while ( my $row = $sth->fetchrow_arrayref() ) {
+                        push @$res, [ @$row ];
+                    }
 				}
 				if ($action{explain}) {
 					$action{action} = 'SQL';

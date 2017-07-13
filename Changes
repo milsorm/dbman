@@ -3,6 +3,8 @@ Revision history for Perl extension dbMan
 0.43 <20170714>
 	- MYMETA removed from MANIFEST
     - automatic ora_connect_with_default_signals => [ 'INT' ] for Oracle driver
+    - try to detect ^C inside oracle commands
+    - bugfixed config files without group
 
 0.42 <20170714>
 	- group can be used recursively

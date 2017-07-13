@@ -114,15 +114,18 @@ sub load_connection {
     return -2 unless -f "$cdir/$name";
 
     my $lcfg                = new DBIx::dbMan::Config -file => "$cdir/$name";
+
     my %processed_groups    = ();
-    my $something_processed = 1;
-    while ( $something_processed ) {
-        $something_processed = 0;
-        for ( $lcfg->group() ) {
-            next if $processed_groups{ $_ };
-            ++$something_processed;
-            print STDERR "Error: Can't use group '$_' for connection '$name'\n" unless $lcfg->merge( $obj->get_group( $_ ) );
-            ++$processed_groups{ $_ };
+    if ( $lcfg->group() ) {
+        my $something_processed = 1;
+        while ( $something_processed ) {
+            $something_processed = 0;
+            for ( $lcfg->group() ) {
+                next if $processed_groups{ $_ };
+                ++$something_processed;
+                print STDERR "Error: Can't use group '$_' for connection '$name'\n" unless $lcfg->merge( $obj->get_group( $_ ) );
+                ++$processed_groups{ $_ };
+            }
         }
     }
 

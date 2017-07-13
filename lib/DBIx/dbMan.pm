@@ -2,7 +2,7 @@ package DBIx::dbMan;
 
 =comment
 
-	dbMan 0.43
+	dbMan 0.44
 	(c) Copyright 1999-2017 by Milan Sorm, sorm@is4u.cz
 	All rights reserved.
 
@@ -21,7 +21,7 @@ use DBIx::dbMan::DBI;        # dbMan DBI interface package
 use DBIx::dbMan::MemPool;    # dbMan memory management system package
 use Data::Dumper;
 
-our $VERSION = '0.43';
+our $VERSION = '0.44';
 
 # constructor, arguments are hash of style -option => value, stored in internal attributes hash
 sub new {
@@ -280,7 +280,7 @@ sub handle_action {
 
         $action{ processed } = undef;                                                                         # standard behaviour - action not processed
         eval { %action = $ext->handle_action( %action ); };                                                   # handling action
-        if ( $@ ) {                                                                                           # error - exception
+        if ( $@ && $@ !~ /^Catched signal INT/ ) {                                                                                           # error - exception
             $obj->{ interface }->print( "Exception catched: $@\n" );
             $action{ processed } = 1;
             $action{ action }    = 'NONE';

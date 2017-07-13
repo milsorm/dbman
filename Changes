@@ -1,7 +1,10 @@
 Revision history for Perl extension dbMan
 
+0.43 <20170714>
+	- MYMETA removed from MANIFEST
+
 0.42 <20170714>
-    - group can be used recursively
+	- group can be used recursively
 
 0.41 <20170713>
 	- DBI support for config with [...] and {...} syntax variable

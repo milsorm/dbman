@@ -3,7 +3,7 @@ package DBIx::dbMan::Extension::StandardSQL;
 use strict;
 use base 'DBIx::dbMan::Extension';
 
-our $VERSION = '0.13';
+our $VERSION = '0.14';
 
 1;
 
@@ -69,7 +69,12 @@ sub handle_action {
 				$obj->{-interface}->nostatus unless $action{output_quiet};
 				return %action;
 			}
-			my $res = $sth->execute();
+
+			my $res = eval {
+				return $sth->execute();
+			};
+			$res = undef if $@;
+
 			$obj->{-dbi}->longreadlen($lr) if $action{longreadlen};
 			if (not defined $res) {
 				my $errstr = $obj->{-dbi}->errstr();

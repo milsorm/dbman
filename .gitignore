@@ -1,0 +1,5 @@
+*.bak
+Makefile.old
+Makefile
+MYMETA.yml
+MYMETA.json

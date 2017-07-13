@@ -8,7 +8,7 @@ Revision history for Perl extension dbMan
 	- Term::ANSIColor dependency
 	- extension Connections - support for prompt_color in connection configuration file (thanks to Tom Dohnalek)
 	- extension CmdConnections - support for COLOR argument for creating connections
-    - unknown command name in Fallback
+	- unknown command name in Fallback
 
 0.40 <20140507>
 	- extension CmdConnections - support for config option

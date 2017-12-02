@@ -1,6 +1,27 @@
 Revision history for Perl extension dbMan
 
-0.44 <20170714>
+0.44 <20171202>
+    - extenston Connections performs implicit rollback transaction during close and reopen
+    - extension Tansaction handles NOTIFY change_connection for prompt changes
+    - locale pragma added, open :locale and :std pragma added
+    - extension SQLResultPreprocess allows characters with ord >= 256
+    - interface abstract method is_utf8 for distinguishing UTF-8 environment
+    - detect UTF-8 in command line from LC_ALL
+    - interface can parse and bind keys only if better Term::ReadLine::* support is present
+    - start ReadLine with STDIN and STDOUT enhanced for UTF-8 input and output
+    - extenstion SQLOutputOldTable supports UTF-8 through file
+    - History supports utf8 encoding
+    - extension EditOracle supports UTF-8
+    - extension KeyBindings supports UTF-8
+    - extension InputFile supports UTF-8
+    - extension OutputPager supports UTF-8
+    - extension EditLine supports UTF-8
+    - extension DeviceOutput supports UTF-8
+    - change Locale::gettext to OO interface (compatibility with UTF-8)
+    - UTF-8 workaround announced in greeting message
+    - tracer supports UTF-8
+    - cmdline switch STDOUT to UTF-8 during every single print ( :-( )
+    - Term::ReadLine::Gnu is requested due to :prompt necessity, solve colorized prompt
 
 0.43 <20170713>
     - MYMETA removed from MANIFEST

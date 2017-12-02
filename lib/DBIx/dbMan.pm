@@ -251,7 +251,7 @@ sub trace {
 
     # change non-selected chars in $params to <hexa> style
     $params = join '',                                # joining transformed chars
-        map { ( $_ >= 32 && $_ <= 254 && $_ != 127 ) ? chr : sprintf "<%02x>", $_; } unpack "C*", $params;    # disassemble $params into chars
+        map { ( $_ >= 32 && $_ != 255 && $_ != 127 ) ? chr : sprintf "<%02x>", $_; } unpack "C*", $params;    # disassemble $params into chars
 
     # sending tracing report via interface object
     $obj->{ interface }->trace( "$direction $where / $action{action} / $params\n" );

@@ -20,6 +20,7 @@ This software provides some functionality in database managing (SQL shell/consol
 use strict;
 use lib '.';	# where I can find dbMan
 use FindBin;
+use locale;
 use vars qw/%ENV %SIG/;
 
 BEGIN {
@@ -72,7 +73,7 @@ Report bugs directly to sorm@is4u.cz.
  
 =head1 LAST MODIFIED
  
-Thu Jul 13 09:14:55 CEST 2017
+Tue Nov 28 11:28:47 CET 2017
 
 =head1 SEE ALSO
  

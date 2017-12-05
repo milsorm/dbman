@@ -1,5 +1,7 @@
 Revision history for Perl extension dbMan
 
+0.45 <20171205>
+
 0.44 <20171202>
     - extenston Connections performs implicit rollback transaction during close and reopen
     - extension Tansaction handles NOTIFY change_connection for prompt changes

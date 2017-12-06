@@ -281,7 +281,7 @@ sub handle_action {
         $action{ processed } = undef;                                                                         # standard behaviour - action not processed
         eval { %action = $ext->handle_action( %action ); };                                                   # handling action
         if ( $@ && $@ !~ /^Catched signal INT/ ) {                                                                                           # error - exception
-            $obj->{ interface }->print( "Exception catched: $@\n" );
+            $obj->{ interface }->error( "Exception catched: $@" );
             $action{ processed } = 1;
             $action{ action }    = 'NONE';
         }

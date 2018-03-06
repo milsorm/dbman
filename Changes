@@ -1,6 +1,6 @@
 Revision history for Perl extension dbMan
 
-0.45 <20171206>
+0.45 <20180306>
     - extension SQLOutputTable supports colortable format
     - config: tablecolor_head, tablecolor_content and tablecolor_lines options for colortable colors
     - config: output_format for primary output format
@@ -13,6 +13,7 @@ Revision history for Perl extension dbMan
     - extension CmdLongSQL proper initialize History buffer (with interface command)
     - we are not using language translation on UTF-8 due to terminal and string issues
     - extension OutputPage - call less as less -R for paging with colors
+    - extension StandardSQL - SQL command can end by comment */
 
 0.44 <20171202>
     - extenston Connections performs implicit rollback transaction during close and reopen

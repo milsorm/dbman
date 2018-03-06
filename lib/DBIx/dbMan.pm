@@ -3,7 +3,7 @@ package DBIx::dbMan;
 =comment
 
 	dbMan 0.45
-	(c) Copyright 1999-2017 by Milan Sorm, sorm@is4u.cz
+	(c) Copyright 1999-2018 by Milan Sorm, sorm@is4u.cz
 	All rights reserved.
 
 	This software provides some functionality in database managing

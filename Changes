@@ -14,6 +14,7 @@ Revision history for Perl extension dbMan
     - we are not using language translation on UTF-8 due to terminal and string issues
     - extension OutputPage - call less as less -R for paging with colors
     - extension StandardSQL - SQL command can end by comment */
+    - extension Connections - improper way of close and reuse (on different connection than current)
 
 0.44 <20171202>
     - extenston Connections performs implicit rollback transaction during close and reopen

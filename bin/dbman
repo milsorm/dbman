@@ -49,7 +49,7 @@ $dbman->start;
 
 =head1 VERSION
  
-0.46
+0.47
  
 =head1 LICENSE
 
